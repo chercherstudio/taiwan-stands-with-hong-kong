@@ -36,7 +36,7 @@ const constants = {
       width: 500,
       height: 500,
       backgroundColor: 0x1099bb,
-      resolution: window.devicePixelRatio || 1,
+      // resolution: window.devicePixelRatio || 1,
       preserveDrawingBuffer: false,
       antialias: true,
     } 
