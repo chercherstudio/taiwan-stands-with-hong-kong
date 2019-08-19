@@ -43,7 +43,7 @@ const constants = {
   },
   assets: {
     origin: '',
-    path: '/assets',
+    path: 'assets',
     count: {
       [categoryEnum.face]: 5,
       [categoryEnum.body]: 1,
