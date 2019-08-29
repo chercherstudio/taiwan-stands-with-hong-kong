@@ -4,9 +4,7 @@ module.exports = {
   minified: isProduction,
   comments: !isProduction,
   presets: [
-    ['@babel/env', {
-      
-    }],
+    '@babel/env',
   ],
   plugins: [
     '@babel/plugin-proposal-class-properties',
