@@ -145,7 +145,7 @@ $(document).ready(function () {
       const $image = $('<img />')
       const imageDataURL = canvas.toDataURL('image/png')
       hdPixiApp.destroy()
-      const $link = $(`<a download="${filename}">或點此連結下載</a>`)
+      const $link = $(`<a download="${filename}">點此連結下載</a>`)
       /// convert canvas content to data-uri for link. When download
       /// attribute is set the content pointed to by link will be
       /// pushed as "download" in HTML5 capable browsers
@@ -162,7 +162,7 @@ $(document).ready(function () {
       //   lnk.fireEvent("onclick");
       // }
       $container.empty()
-      $container.append($('<div>右鍵另存圖片</div>'), $image, $('<br />'), $link)
+      $container.append($('<div>↓電腦右鍵或手機長壓另存圖片↓</div>'), $image, $('<br />'), '若您的裝置無法存圖，可', $link)
     } catch (error) {
       console.error(error)
       if (typeof window.alert === 'function') {

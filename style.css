@@ -171,8 +171,12 @@ body {
   margin: 0 auto;
 }
 
-#produce {
-  margin-top: 80px;
+.produce-title {
+  margin-top: 1em;
+  text-align: center;
+}
+
+.produce-content {
   text-align: center;
 }
 
@@ -202,6 +206,10 @@ body {
 
 .hide {
   display: none;
+}
+
+#relateds {
+  margin-bottom: 80px;
 }
 
 /* https://projects.lukehaas.me/css-loaders/ */
@@ -298,4 +306,22 @@ body {
   margin: 12px;
   width: 120px;
   height: 120px;
+}
+
+#support {
+  text-align: center;
+}
+
+.comment {
+  margin-top: 2em;
+  margin-bottom: 1em;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: center;
+}
+
+@media screen and (min-width: 1024px) {
+  .mobile-only {
+    display: none;
+  }
 }
