@@ -18,6 +18,20 @@ body {
       -ms-flex: 1 0 auto;
           flex: 1 0 auto;
   cursor: pointer;
+  position: relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+   -ms-user-select: none;
+       user-select: none;
+}
+
+#prev-category>div, #next-category>div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
 }
 
 #prev-category {
@@ -117,13 +131,39 @@ body {
   height: auto;
 }
 
-#download {
-  width: 200px;
+.button {
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background-color:#f9f9f9;
+	border-radius:6px;
+	border:1px solid #dcdcdc;
+	display:inline-block;
+	cursor:pointer;
+	font-size: 18px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
+}
+.button:hover {
+	background-color:#e9e9e9;
+}
+.button:active {
+	position:relative;
+	top:1px;
+}
+
+#create-avatar {
   font-size: 30px;
   font-weight: 700;
   margin: 50px auto 0 auto;
-  display: block;
+  text-align: center;
+  width: 200px;
   cursor: pointer;
+  color: #000000;
+  display: block;
+  -webkit-box-shadow: 1px 1px 2px 2px rgba(78, 78, 78, 0.2);
+          box-shadow: 1px 1px 2px 2px rgba(78, 78, 78, 0.2);
 }
 
 #preview {
@@ -157,4 +197,85 @@ body {
 
 #license a:link,a:visited {
   color: #c2c2c2;
+}
+
+.hide {
+  display: none;
+}
+
+/* https://projects.lukehaas.me/css-loaders/ */
+#loader-wrapper {
+  width: 60px;
+  height: 60px;
+  overflow: hidden;
+  position: relative;
+  margin: 0 auto;
+}
+#loader {
+  top: -3.5em;
+  right: 0;
+  position: absolute;
+  font-size: 10px;
+  margin: 50px auto;
+  text-indent: -9999em;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  background: #42b943;
+  background: -o-linear-gradient(left, #42b943 10%, rgba(66,185,67, 0) 42%);
+  background: -webkit-gradient(linear, left top, right top, color-stop(10%, #42b943), color-stop(42%, rgba(66,185,67, 0)));
+  background: linear-gradient(to right, #42b943 10%, rgba(66,185,67, 0) 42%);
+  position: relative;
+  -webkit-animation: load3 1.4s infinite linear;
+  animation: load3 1.4s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+#loader:before {
+  width: 50%;
+  height: 50%;
+  background: #42b943;
+  border-radius: 100% 0 0 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  content: '';
+}
+#loader:after {
+  background: #fafafa;
+  width: 75%;
+  height: 75%;
+  border-radius: 50%;
+  content: '';
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+@-webkit-keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load3 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+#download-avatar {
+  text-align: center;
 }

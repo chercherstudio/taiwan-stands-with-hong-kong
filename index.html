@@ -33,7 +33,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.13/lodash.min.js" integrity="sha256-u6wkd45NlhSbHkAQEtw18F3PMyvbJejgBSMtRDpTdOs=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/5.1.1/pixi.min.js" integrity="sha256-wcKW4apmmEftCWGQ0zaHFnv8clOjur0Kir5nMYd+TEU=" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
-  <script src="lib/96bbbad8270348eba9ef8b70ba184020.js"></script>
+  <script src="lib/0f0a4082e2bc3f2ebea31cbc41a40fe7.js"></script>
 </head>
 <body>
   <div id="main">
@@ -43,12 +43,16 @@
     </div>
     <div id="preview"></div>
     <div id="cate-row">
-      <button id="prev-category">←</button>
+      <div id="prev-category"><div>←</div></div>
       <div id="categories"></div>
-      <button id="next-category">→</button>
+      <div id="next-category"><div>→</div></div>
     </div>
     <div id="items"></div>
-    <button id="download">下載頭貼📥</button>
+    <a id="create-avatar" href="#" class="button" onclick="return false;">產生頭貼</a>
+    <div id="loader-wrapper">
+      <div id="loader" class="hide">Loader</div>
+    </div>
+    <div id="download-avatar"></div>
     <div id="produce">・製作・</div>
     <div id="logo"><a href="https://www.facebook.com/chercherstudio" target="_blank"><img src="assets/logo.jpg" alt="Chercher Studio 角鯨腦汁事務所"></a></div>
     <div id="license">

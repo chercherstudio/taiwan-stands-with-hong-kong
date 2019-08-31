@@ -105,26 +105,7 @@ function getImageSrc(category, type, index) {
 // }
 
 // Source from:  http://stackoverflow.com/questions/18480474/how-to-save-an-image-from-canvas
-function downloadCanvasAsPNG(canvas, filename) {
-  /// create an "off-screen" anchor tag
-  const image = canvas.toDataURL('image/png')
-  const lnk = document.createElement('a')
-  lnk.download = filename
-  /// convert canvas content to data-uri for link. When download
-  /// attribute is set the content pointed to by link will be
-  /// pushed as "download" in HTML5 capable browsers
-  lnk.href = canvas.toDataURL('image/png')
-  /// create a "fake" click-event to trigger the download
-  if (typeof document.createEvent === 'function') {
-    const e = document.createEvent("MouseEvents");
-    e.initMouseEvent("click", true, true, window,
-      0, 0, 0, 0, 0, false, false, false,
-      false, 0, null);
-    lnk.dispatchEvent(e);
-  } else if (typeof lnk.fireEvent === 'function') {
-    lnk.fireEvent("onclick");
-  }
-}
+
 
 function onImageLoaded(url, cb) {
   var image = new Image()
@@ -142,44 +123,71 @@ function onImageLoaded(url, cb) {
 }
 
 
-function createHDimage() {
-  const pixiApp = new PIXI.Application({
-    ...pixiOptions,
-    width: 2048,
-    height: 2048,
-  })
-  const loadImageTasks = []
-  categoriesInOrder.forEach((categoryEnum) => {
-    const itemIndex = state.currentItemIndex[categoryEnum]
-    if (itemIndex > 0) {
-      const container = new PIXI.Container()
-      const src = getImageSrc(categoryEnum, assetsType.output, itemIndex)
-      loadImageTasks.push(new Promise((resolve) => {
-        onImageLoaded(src, (image) => {
-          const sprite = PIXI.Sprite.from(image)
-          sprite.width = 2048
-          sprite.height = 2048
-          container.removeChildren() // clear container
-          container.addChild(sprite)
-          resolve()
-        })
-      }))
-      pixiApp.stage.addChild(container)
-    }
-  })
-  return Promise.all(loadImageTasks)
-    .then(() => {
-      setTimeout(() => {
-        pixiApp.destroy()
-      }, 10000)
-      return pixiApp.renderer.extract.canvas(pixiApp.stage)
-    })
-}
-
 
 /* RUN APP */
 
 $(document).ready(function () {
+  /* For HD output image */
+  const hdSize = 2048
+
+  function downloadCanvasAsPNG(hdPixiApp, filename, $container) {
+    /// create an "off-screen" anchor tag
+    const canvas = hdPixiApp.renderer.extract.canvas(hdPixiApp.stage)
+    const image = canvas.toDataURL('image/png')
+    hdPixiApp.destroy()
+    const $link = $(`<a download="${filename}">點此下載圖片</a>`)
+    /// convert canvas content to data-uri for link. When download
+    /// attribute is set the content pointed to by link will be
+    /// pushed as "download" in HTML5 capable browsers
+    $link.attr('href', image.replace("image/png", "image/octet-stream"))
+    /// create a "fake" click-event to trigger the download
+    // if (typeof document.createEvent === 'function') {
+    //   const e = document.createEvent("MouseEvents");
+    //   e.initMouseEvent("click", true, true, window,
+    //     0, 0, 0, 0, 0, false, false, false,
+    //     false, 0, null);
+    //   lnk.dispatchEvent(e);
+    // } else if (typeof lnk.fireEvent === 'function') {
+    //   lnk.fireEvent("onclick");
+    // }
+    $container.empty()
+    $container.append($link)
+  }
+
+  function createHDimage() {
+    $('#loader').removeClass('hide')
+    const hdPixiApp = new PIXI.Application({
+      ...pixiOptions,
+      width: hdSize,
+      height: hdSize,
+    })
+    const loadImageTasks = []
+    categoriesInOrder.forEach((categoryEnum) => {
+      const itemIndex = state.currentItemIndex[categoryEnum]
+      if (itemIndex > 0) {
+        const container = new PIXI.Container()
+        const src = getImageSrc(categoryEnum, assetsType.output, itemIndex)
+        loadImageTasks.push(new Promise((resolve) => {
+          onImageLoaded(src, (image) => {
+            const sprite = PIXI.Sprite.from(image)
+            sprite.width = 2048
+            sprite.height = 2048
+            container.removeChildren() // clear container
+            container.addChild(sprite)
+            resolve()
+          })
+        }))
+        hdPixiApp.stage.addChild(container)
+      }
+    })
+    return Promise.all(loadImageTasks)
+      .then(() => {
+        return hdPixiApp
+      })
+  }
+
+  /*  */
+
 
   function handleResize() {
     try {
@@ -339,12 +347,13 @@ $(document).ready(function () {
   // Bind listener to 'prev' and 'next' buttons
   $('#prev-category').click(handlePrev)
   $('#next-category').click(handleNext)
-  // Bind listener to 'download' button
+  // Bind listener to 'create-avatar' button
   // $('#download').click(() => downloadCanvasAsPNG(pixiApp.renderer.extract.canvas(pixiApp.stage), 'i-support-hk.png'))
-  $('#download').click(() => {
+  $('#create-avatar').click(() => {
     createHDimage()
-      .then(canvas => {
-        downloadCanvasAsPNG(canvas, 'i-support-hk.png')
+      .then(hdPixiApp => {
+        $('#loader').addClass('hide')
+        downloadCanvasAsPNG(hdPixiApp, 'i-support-hk.png', $('#download-avatar'))
       })
   })
 });
