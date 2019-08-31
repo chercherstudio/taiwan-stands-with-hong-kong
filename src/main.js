@@ -61,7 +61,7 @@ const assetsType = {
 }
 
 const pixiOptions = {
-  backgroundColor: 'transparent',
+  backgroundColor: 0xfafafa,
   // resolution: window.devicePixelRatio || 1,
   preserveDrawingBuffer: false,
   antialias: true,
