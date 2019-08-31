@@ -1,11 +1,13 @@
 # taiwan-stands-with-hong-kong
 
+[【反送中，撐香港】大頭貼產生器](https://chercherstudio.github.io/tw-support-hk/)
+
 ## 壓縮 png
 
 ```bash
 # 小圖示 (85x85)
 cd icons
-mogrify -resize 170x170\> -format png **/*.PNG
+mogrify -resize 170x170\> -format png **/*.png
 pngquant **/*.png --ext .png -f
 
 # 預覽用 (500x500)
