@@ -132,26 +132,33 @@ $(document).ready(function () {
 
   function downloadCanvasAsPNG(hdPixiApp, filename, $container) {
     /// create an "off-screen" anchor tag
-    const canvas = hdPixiApp.renderer.extract.canvas(hdPixiApp.stage)
-    const image = canvas.toDataURL('image/png')
-    hdPixiApp.destroy()
-    const $link = $(`<a download="${filename}">點此下載圖片</a>`)
-    /// convert canvas content to data-uri for link. When download
-    /// attribute is set the content pointed to by link will be
-    /// pushed as "download" in HTML5 capable browsers
-    $link.attr('href', image.replace("image/png", "image/octet-stream"))
-    /// create a "fake" click-event to trigger the download
-    // if (typeof document.createEvent === 'function') {
-    //   const e = document.createEvent("MouseEvents");
-    //   e.initMouseEvent("click", true, true, window,
-    //     0, 0, 0, 0, 0, false, false, false,
-    //     false, 0, null);
-    //   lnk.dispatchEvent(e);
-    // } else if (typeof lnk.fireEvent === 'function') {
-    //   lnk.fireEvent("onclick");
-    // }
-    $container.empty()
-    $container.append($link)
+    try {
+      const canvas = hdPixiApp.renderer.extract.canvas(hdPixiApp.stage)
+      const image = canvas.toDataURL('image/png')
+      hdPixiApp.destroy()
+      const $link = $(`<a download="${filename}">點此下載圖片</a>`)
+      /// convert canvas content to data-uri for link. When download
+      /// attribute is set the content pointed to by link will be
+      /// pushed as "download" in HTML5 capable browsers
+      $link.attr('href', image)
+      /// create a "fake" click-event to trigger the download
+      // if (typeof document.createEvent === 'function') {
+      //   const e = document.createEvent("MouseEvents");
+      //   e.initMouseEvent("click", true, true, window,
+      //     0, 0, 0, 0, 0, false, false, false,
+      //     false, 0, null);
+      //   lnk.dispatchEvent(e);
+      // } else if (typeof lnk.fireEvent === 'function') {
+      //   lnk.fireEvent("onclick");
+      // }
+      $container.empty()
+      $container.append($link)
+    } catch (error) {
+      console.error(error)
+      if (typeof window.alert === 'function') {
+        window.alert('記憶體不足或瀏覽器錯誤')
+      }
+    }
   }
 
   function createHDimage() {
