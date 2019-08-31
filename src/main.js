@@ -240,14 +240,12 @@ $(document).ready(function () {
     }
     /* Handle currentItemIndex change */
     const itemsToUpdate = _.get(stateToMerge, ['currentItemIndex'])
-    console.log(itemsToUpdate)
     _.forEach(itemsToUpdate, (nextItemIndex, itemCategory) => {
       const currentCategory = categoriesInOrder[state.currentCategoryIndex]
       if (typeof nextItemIndex === 'number' && (nextItemIndex !== state.currentItemIndex[itemCategory] || forceUpdate)) {
         if (currentCategory === itemCategory) {
           controls.focusItem(nextItemIndex)
         }
-        console.log('update', _.findIndex(categoriesInOrder, itemCategory), nextItemIndex)
         preview.updateItem(_.findIndex(categoriesInOrder, cat => cat === itemCategory), nextItemIndex)
       }
     })
