@@ -1,5 +1,6 @@
 body {
   background: #fafafa;
+  font-family: "source-han-sans-traditional", "Noto Sans TC", Arial, Helvetica, Roboto, "PingFang TC", "儷黑 Pro", "LiHei Pro", "文泉驛正黑", "WenQuanYi Zen Hei", "微軟正黑體", "Microsoft JhengHei", "標楷體", "DFKai-SB", sans-serif;
 }
 
 #cate-row {
@@ -278,4 +279,17 @@ body {
 
 #download-avatar {
   text-align: center;
+}
+
+#related-title {
+  margin: 40px auto 15px auto;
+  text-align: center;
+}
+
+.related-item>a:link, .related-item>a:visited {
+  color: rgba(0, 0, 0, 0.84);
+}
+
+.related-item {
+  margin-bottom: .3em;
 }
