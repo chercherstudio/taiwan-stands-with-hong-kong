@@ -2,6 +2,7 @@
 
 // Correspond to assets dirnames
 const categoryEnum = {
+  frame: 'frame',
   base: 'base',
   face: 'facial-expression',
   goggles: 'goggles',
@@ -21,6 +22,11 @@ const categoriesInOrder = [
   categoryEnum.goggles,
   categoryEnum.weapon,
   categoryEnum.words,
+  categoryEnum.frame,
+]
+
+const cateoriesNotInControl = [
+  categoryEnum.frame,
 ]
 
 const cateLabel = {
@@ -43,6 +49,7 @@ const cateAssetsCount = {
   [categoryEnum.goggles]: 5,
   [categoryEnum.weapon]: 8,
   [categoryEnum.words]: 6,
+  [categoryEnum.frame]: 1,
 }
 
 const assetsOrigin = ''
@@ -54,7 +61,7 @@ const assetsType = {
 }
 
 const pixiOptions = {
-  backgroundColor: 0x1099bb,
+  backgroundColor: 'transparent',
   // resolution: window.devicePixelRatio || 1,
   preserveDrawingBuffer: false,
   antialias: true,
@@ -73,6 +80,7 @@ const state = {
     [categoryEnum.goggles]: 0,
     [categoryEnum.weapon]: 0,
     [categoryEnum.words]: 0,
+    [categoryEnum.frame]: 1,
   },
   previewSize: 500,
 }
@@ -229,12 +237,18 @@ $(document).ready(function () {
       controls.focusItem(state.currentItemIndex[nextCategory])
     }
     /* Handle currentItemIndex change */
-    const currentCategory = categoriesInOrder[state.currentCategoryIndex]
-    const nextItemIndex = _.get(stateToMerge, ['currentItemIndex', currentCategory])
-    if (typeof nextItemIndex === 'number') {
-      controls.focusItem(nextItemIndex)
-      preview.updateItem(state.currentCategoryIndex, nextItemIndex)
-    }
+    const itemsToUpdate = _.get(stateToMerge, ['currentItemIndex'])
+    console.log(itemsToUpdate)
+    _.forEach(itemsToUpdate, (nextItemIndex, itemCategory) => {
+      const currentCategory = categoriesInOrder[state.currentCategoryIndex]
+      if (typeof nextItemIndex === 'number' && (nextItemIndex !== state.currentItemIndex[itemCategory] || forceUpdate)) {
+        if (currentCategory === itemCategory) {
+          controls.focusItem(nextItemIndex)
+        }
+        console.log('update', _.findIndex(categoriesInOrder, itemCategory), nextItemIndex)
+        preview.updateItem(_.findIndex(categoriesInOrder, cat => cat === itemCategory), nextItemIndex)
+      }
+    })
     /* Update State */
     _.merge(state, stateToMerge)
   }
@@ -336,8 +350,9 @@ $(document).ready(function () {
   $('#preview').append(pixiApp.view);
 
   // Render category and item buttons
-  categoriesInOrder.forEach((categoryEnum, i) => {
-    const $category = $(`<div id="cate-${categoryEnum}" class="category">${cateLabel[categoryEnum]}</div>`)
+  categoriesInOrder.forEach((category, i) => {
+    if (_.includes(cateoriesNotInControl, category)) { return }
+    const $category = $(`<div id="cate-${category}" class="category">${cateLabel[category]}</div>`)
     $('#categories').append($category)
     $category.click(() => {
       setState({
@@ -349,6 +364,7 @@ $(document).ready(function () {
   // Set initial state
   setState({
     currentCategoryIndex: state.currentCategoryIndex,
+    currentItemIndex: state.currentItemIndex,
   }, true)
 
   // Bind listener to 'prev' and 'next' buttons
