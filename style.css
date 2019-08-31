@@ -293,3 +293,9 @@ body {
 .related-item {
   margin-bottom: .3em;
 }
+
+#download-avatar>img {
+  margin: 12px;
+  width: 120px;
+  height: 120px;
+}

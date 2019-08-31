@@ -142,13 +142,15 @@ $(document).ready(function () {
     /// create an "off-screen" anchor tag
     try {
       const canvas = hdPixiApp.renderer.extract.canvas(hdPixiApp.stage)
-      const image = canvas.toDataURL('image/png')
+      const $image = $('<img />')
+      const imageDataURL = canvas.toDataURL('image/png')
       hdPixiApp.destroy()
-      const $link = $(`<a download="${filename}">點此下載圖片</a>`)
+      const $link = $(`<a download="${filename}">或點此連結下載</a>`)
       /// convert canvas content to data-uri for link. When download
       /// attribute is set the content pointed to by link will be
       /// pushed as "download" in HTML5 capable browsers
-      $link.attr('href', image)
+      $link.attr('href', imageDataURL)
+      $image.attr('src', imageDataURL)
       /// create a "fake" click-event to trigger the download
       // if (typeof document.createEvent === 'function') {
       //   const e = document.createEvent("MouseEvents");
@@ -160,7 +162,7 @@ $(document).ready(function () {
       //   lnk.fireEvent("onclick");
       // }
       $container.empty()
-      $container.append($link)
+      $container.append($('<div>右鍵另存圖片</div>'), $image, $('<br />'), $link)
     } catch (error) {
       console.error(error)
       if (typeof window.alert === 'function') {
