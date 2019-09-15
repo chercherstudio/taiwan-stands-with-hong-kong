@@ -12,11 +12,12 @@ pngquant **/*.png --ext .png -f
 
 # 預覽用 (500x500)
 cd preview
-mogrify -resize 1000x1000\> -format png **/*.PNG
+mogrify -resize 1000x1000\> -format png **/*.png
 pngquant **/*.png --ext .png -f
 
-# 壓縮大圖（1024 x 1024）
+# 壓縮大圖（2048 x 2048）
 cd output
-pngquant **/*.PNG --ext .png -f
+mogrify -resize 2048x2048\> -format png **/*.png
+pngquant **/*.png --ext .png -f
 
 ```
