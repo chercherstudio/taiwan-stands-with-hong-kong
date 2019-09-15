@@ -163,6 +163,14 @@ $(document).ready(function () {
       // }
       $container.empty()
       $container.append($('<div>↓電腦右鍵或手機長壓另存圖片↓</div>'), $image, $('<br />'), '若您的裝置無法存圖，可', $link)
+      try {
+        sendDownloadEventToGtag()
+        _.forEach(state.currentItemIndex, (value, categoryEnum) => {
+          sendPickItemEventToGtag(categoryEnum, value)
+        })
+      } catch (gtagError) {
+        /* do nothing */
+      }
     } catch (error) {
       console.error(error)
       if (typeof window.alert === 'function') {
@@ -203,7 +211,20 @@ $(document).ready(function () {
       })
   }
 
-  /*  */
+  /* GTAG Events */
+  function sendPickItemEventToGtag(categoryEnum, value) {
+    return gtag('event', 'Pick Support HK Item', {
+      event_category: 'Pick Support HK Item',
+      event_label: cateLabel[categoryEnum],
+      value: value
+      })
+  }
+
+  function sendDownloadEventToGtag() {
+    return gtag('event', 'Download Support HK Avatar', {
+      event_category: 'Download Support HK Avatar'
+      })
+  }
 
 
   function handleResize() {
