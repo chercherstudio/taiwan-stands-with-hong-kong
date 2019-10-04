@@ -43,12 +43,12 @@ const cateLabel = {
 const cateAssetsCount = {
   [categoryEnum.base]: 6,
   [categoryEnum.face]: 8,
-  [categoryEnum.hair]: 10,
+  [categoryEnum.hair]: 9,
   [categoryEnum.helmet]: 4,
   [categoryEnum.mask]: 5,
   [categoryEnum.goggles]: 5,
   [categoryEnum.weapon]: 8,
-  [categoryEnum.words]: 7,
+  [categoryEnum.words]: 10,
   [categoryEnum.frame]: 1,
 }
 
